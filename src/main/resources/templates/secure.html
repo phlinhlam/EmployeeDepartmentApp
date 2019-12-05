@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mystyle.css}">
+</head>
+<body>
+<div class="container" style="color: #63737d; margin-top: 5px">
+    <div class="jumbotron">
+        <h1>ADMIN PAGE</h1>
+
+        <br />
+        <br />
+        <h4>Employee List</h4>
+        <table>
+            <tr>
+                <th>Employee Name</th>
+                <th>UserName</th>
+                <th>Department Name</th>
+            </tr>
+            <tr th:each="user : ${users}">
+                <td style="text-align: center" th:text="${user.firstName}"></td>
+                <td style="text-align: center" th:text="${user.username}"></td>
+                <td th:text="${user.department.deptName}"></td>
+            </tr>
+
+        </table>
+        <br />
+        <a href="/addUser" class="btn btn-info" role="button">Add New User</a>
+        <br />
+        <br />
+        <br />
+        <br />
+        <h4>Department List</h4>
+        <table>
+            <tr>
+                <th>Department Name</th>
+            </tr>
+            <tr th:each="dept : ${departments}">
+                <td style="text-align: center" th:text="${dept.deptName}"></td>
+                </td>
+            </tr>
+            <td> <form class="form-inline my-2 my-lg-0" th:action="@{/searchDepartment}" method="post">
+                <input class="form-control mr-sm-2" type="search" name="searchString" placeholder="Search for department" aria-label="Search for a department">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            </td>
+
+        </table>
+        <br/>
+        <a href="/addDepartment" class="btn btn-info" role="button">Add New Department</a>
+        <br/>
+        <br/>
+        <br/>
+        <a href="/logout" class="btn btn-info" role="button">Logout</a>
+    </div>
+
+</div>
+
+</body>
+</html>

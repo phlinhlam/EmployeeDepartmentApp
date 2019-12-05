@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mystyle.css}">
+</head>
+<body>
+<div class="container" style="color: #63737d; margin-top: 10px">
+    <div class="jumbotron">
+        <h1 style="color: #4b8f95">List of Department</h1>
+        <br />
+        <table> <!--to make the input bar rounded-->
+            <tr>
+                <th>Departments</th>
+            </tr>
+            <tr th:each="dept : ${departments}">
+                <td style="text-align: center" th:text="${dept.dept_id}"></td>
+                <td style="text-align: center" th:text="${dept.deptName}"></td>
+
+                <td>
+                    <a th:href="@{/update/{dept_id}(dept_id=${dept.dept_id})}">Update</a>
+                    <a th:href="@{/detail/{dept_id}(dept_id=${dept.dept_id})}">Detail</a>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <br />
+        <a href="/addDepartment" class="btn btn-info" role="button">Add New Department</a>
+    </div>
+</div>
+</body>
+</html>

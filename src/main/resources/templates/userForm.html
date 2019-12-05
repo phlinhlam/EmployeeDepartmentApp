@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mystyle.css}">
+</head>
+<body>
+<h1>Employee Form</h1>
+<div class="container" style="color: #63737d; margin-top: 10px">
+    <div class="jumbotron">
+        <h1 style="color: #4b8f95">Employee Management</h1>
+        <br />
+
+        <form action="#" th:action="@{/processUser}" th:object="${user}" autocomplete="off" method="post">
+            <input type="hidden" th:field="*{id}" />
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">First Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control form-control-sm" th:field="*{firstName}"/>
+                    <span th:if="${#fields.hasErrors('firstName')}"
+                          th:errors="*{firstName}"></span><br />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Last Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control form-control-sm" th:field="*{lastName}"/>
+                    <span th:if="${#fields.hasErrors('lastName')}"
+                          th:errors="*{lastName}"></span><br />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control form-control-sm" th:field="*{email}"/>
+                    <span th:if="${#fields.hasErrors('email')}"
+                          th:errors="*{email}"></span><br />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control form-control-sm" th:field="*{password}"/>
+                    <span th:if="${#fields.hasErrors('password')}"
+                          th:errors="*{password}"></span><br />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control form-control-sm" th:field="*{username}"/>
+                    <span th:if="${#fields.hasErrors('username')}"
+                          th:errors="*{username}"></span><br />
+                </div>
+            </div>
+            <div>
+                <select name = "deptid">
+                    <option th:each="department : ${departments}" th:value="${department.dept_id}"
+                                th:text="${department.deptName}">
+                    </option>
+                </select>
+            </div>
+
+
+
+            <input type="submit" class="btn btn-info" value="Add Employee"/>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>
