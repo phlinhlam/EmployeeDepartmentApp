@@ -1,12 +1,17 @@
 package com.example.demo;
 
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Map;
 import java.util.Set;
 
 @Controller
@@ -15,7 +20,8 @@ public class HomeController {
     DepartmentRepository departmentRepository;
     @Autowired
     UserRepository userRepository;
-
+    @Autowired
+    CloudinaryConfig cloudc;
     //register
 //    @Autowired
 //    private UserService userService;
@@ -95,12 +101,28 @@ public class HomeController {
     }
 
     @PostMapping("/processUser")
-    public String processUser(@ModelAttribute User user,
-                              @RequestParam("deptid") long id) {
+    public String processUser(@Valid @ModelAttribute User user,
+                              @RequestParam("deptid") long id,
+                              @RequestParam("file") MultipartFile file, BindingResult result) {
         user.setDepartment(departmentRepository.findById(id).get());
         userRepository.save(user);
         Department department = departmentRepository.findById(id).get();
         Set<User> users = department.getUsers();
+        if(!file.isEmpty())
+        {
+            try{
+                Map uploadResult = cloudc.upload(file.getBytes(), ObjectUtils.asMap("resourcetype", "auto"));
+                user.setUrl(uploadResult.get("url").toString());
+                userRepository.save(user);
+            }catch (IOException ex){
+                ex.printStackTrace();
+                return "redirect:/userForm";
+            }
+        }
+        else
+        {
+            userRepository.save(user);
+        }
         users.add(user);
         department.setUsers(users);
         departmentRepository.save(department);

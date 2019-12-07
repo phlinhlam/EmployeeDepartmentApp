@@ -33,7 +33,8 @@ public class User {
 
     @Column(name="username")
     private String username;
-
+    @Column(name = "url")
+    private String url;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name="role_id"))
@@ -46,14 +47,36 @@ public class User {
 
     public User(String email, String password, String firstName, String lastName, boolean enabled, String username) {
         this.setEmail(email);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         this.setPassword(password);
         this.setFirstName(firstName);
         this.setLastName(lastName);
         this.setEnabled(enabled);
         this.setUsername(username);
     }
+
+    public User(String email, String password, String firstName, String lastName, boolean enabled, String username, String url, Department department) {
+        this.email = email;
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.enabled = enabled;
+        this.username = username;
+        this.url = url;
+        this.department = department;
+    }
+
     public Department getDepartment() {
         return department;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public void setDepartment(Department department) {

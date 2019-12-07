@@ -35,12 +35,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
 //for dataloader
-            .antMatchers("/","/h2-console/**","/css/**","/register","/addDepartment","/addEmployee","/searchDepartment","/update/{dept_id}","/detail/{dept_id}","/secure").permitAll()
+            .antMatchers("/","/h2-console/**","/css/**","/register").permitAll()
 //for register
                 //.antMatchers("/","/h2-console/**","/register").permitAll()
-                .antMatchers("/secure").access("hasAnyAuthority('ADMIN')")
+                .antMatchers("/addDepartment","/addEmployee","/searchDepartment","/update/{dept_id}","/detail/{dept_id}","/secure").access("hasAnyAuthority('ADMIN')")
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").permitAll()
+                .and().formLogin().loginPage("/login").defaultSuccessUrl("/secure", true).permitAll()
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login").permitAll()

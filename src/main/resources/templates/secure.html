@@ -21,11 +21,15 @@
                 <th>Employee Name</th>
                 <th>UserName</th>
                 <th>Department Name</th>
+                <th>Photo</th>
             </tr>
             <tr th:each="user : ${users}">
                 <td style="text-align: center" th:text="${user.firstName}"></td>
                 <td style="text-align: center" th:text="${user.username}"></td>
                 <td th:text="${user.department.deptName}"></td>
+                <td th:if="${user.url} !=null">
+                    <img th:height="30" th:width="30" th:src="${user.url}"/><hr />
+                </td>
             </tr>
 
         </table>
@@ -42,7 +46,6 @@
             </tr>
             <tr th:each="dept : ${departments}">
                 <td style="text-align: center" th:text="${dept.deptName}"></td>
-                </td>
             </tr>
             <td> <form class="form-inline my-2 my-lg-0" th:action="@{/searchDepartment}" method="post">
                 <input class="form-control mr-sm-2" type="search" name="searchString" placeholder="Search for department" aria-label="Search for a department">
